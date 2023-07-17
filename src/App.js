@@ -1,4 +1,5 @@
 import "./App.css";
+import User from "./models/User";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
@@ -65,14 +66,22 @@ function MainPage() {
 }
 
 function UserInfo() {
-  const myUserRef = firestore.collection("users").doc("fAw1lxmRrloDVqN4xS3N");
-  const [snapshot] = useDocument(myUserRef);
-  if (snapshot) {
-    const data = snapshot.data();
-    console.log(data);
-    return <p>{data.name}</p>;
+  const myUserRef = firestore.collection("users").doc("_example");
+  const [snapshot, isLoading] = useDocument(myUserRef);
+  if (!isLoading) {
+    const user = User.fromObject(snapshot.data());
+    console.log(user);
+    return (
+      <div>
+        <p>id: {user.id}</p>
+        <p>name: {user.name}</p>
+        <p>password: {user.password}</p>
+        <p>timeSpent: {user.timeSpent}</p>
+        <p>admin: {user.admin.toString()}</p>
+      </div>
+    );
   } else {
-    return <p>ERROR</p>;
+    return <p>Loading...</p>;
   }
 }
 
