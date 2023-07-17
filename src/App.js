@@ -1,17 +1,14 @@
-import "./App.css";
+import solarPanelBackground from "./assets/solar_panels.jpg";
+
 import User from "./models/User";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/auth";
-
-import {
-  useCollectionData,
-  useCollectionDataOnce,
-  useDocument,
-  useDocumentOnce,
-} from "react-firebase-hooks/firestore";
+import { useDocument } from "react-firebase-hooks/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
+
+import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 
 firebase.initializeApp({
   apiKey: "AIzaSyBnx-2F4AoRsDT1uAxskpY6g4RUGNa8iz0",
@@ -30,11 +27,13 @@ function App() {
   const [user] = useAuthState(auth);
 
   return (
-    <div className="App">
-      <header>
-        <h1>⚛️🔥💬</h1>
-      </header>
-
+    <div
+      className="text-center"
+      style={{
+        backgroundImage: `url(${solarPanelBackground}) `,
+        "background-size": "cover",
+      }}
+    >
       <section>{user ? <MainPage /> : <SignIn />}</section>
     </div>
   );
@@ -47,8 +46,59 @@ function SignIn() {
   };
   return (
     <div>
-      <p>Welcome to the sign in page</p>
-      <button onClick={signIn}>Sign in</button>
+      <Container>
+        <Row className="vh-100 d-flex justify-content-center align-items-center">
+          <Col md={8} lg={6} xs={12}>
+            <div className="border border-3 border-primary"></div>
+            <Card className="shadow">
+              <Card.Body>
+                <div className="mb-3 mt-md-4">
+                  <h2 className="fw-bold mb-4 text-uppercase ">🔥☀ Upcaller ☀🔥</h2>
+                  <div className="mb-3">
+                    <Form>
+                      <Form.Group
+                        className="mb-3"
+                        controlId="formBasicUsername"
+                      >
+                        <Form.Label className="text-center">
+                          Username
+                        </Form.Label>
+                        <Form.Control
+                          type="username"
+                          placeholder="Enter username"
+                        />
+                      </Form.Group>
+
+                      <Form.Group
+                        className="mb-3"
+                        controlId="formBasicPassword"
+                      >
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control type="password" placeholder="Password" />
+                      </Form.Group>
+                      <Form.Group
+                        className="mb-3"
+                        controlId="formBasicCheckbox"
+                      >
+                        <p className="small">
+                          <a className="text-primary" href="#!">
+                            Forgot password?
+                          </a>
+                        </p>
+                      </Form.Group>
+                      <div className="d-grid">
+                        <Button variant="primary" onClick={signIn}>
+                          Login
+                        </Button>
+                      </div>
+                    </Form>
+                  </div>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 }
@@ -59,7 +109,7 @@ function MainPage() {
   return (
     <div>
       <p>Welcome to the home page</p>
-      <button onClick={signOut}>Sign out</button>
+      <Button onClick={signOut}>Sign out</Button>
       <UserInfo />
     </div>
   );
@@ -84,14 +134,5 @@ function UserInfo() {
     return <p>Loading...</p>;
   }
 }
-
-// function MyComponent() {
-//   // const myUserQuery = firestore.collection("users").doc("fAw1lxmRrloDVqN4xS3N");
-//   // let myUserData = useCollectionDataOnce(myUserQuery);
-//   // console.log(myUserData);
-//   // console.log("NEW APP!");
-
-//   return <p>Hello 2</p>;
-// }
 
 export default App;
