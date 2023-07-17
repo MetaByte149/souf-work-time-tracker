@@ -4,20 +4,24 @@ import { firestore } from "../App";
 import { useDocument } from "react-firebase-hooks/firestore";
 import User from "../models/User";
 
-export function MainPage() {
+export function MainPage(props) {
+  const { authUser } = props;
+
   const signOut = () => auth.signOut();
 
   return (
     <div>
       <p>Welcome to the home page</p>
       <Button onClick={signOut}>Sign out</Button>
-      <UserInfo />
+      <UserInfo authUser={authUser} />
     </div>
   );
 }
 
-export function UserInfo() {
-  const myUserRef = firestore.collection("users").doc("_example");
+export function UserInfo(props) {
+  const { authUser } = props;
+
+  const myUserRef = firestore.collection("users").doc(authUser.uid);
   const [snapshot, isLoading] = useDocument(myUserRef);
   if (!isLoading) {
     const user = User.fromObject(snapshot.data());

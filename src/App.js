@@ -1,6 +1,5 @@
 import solarPanelBackground from "./assets/solar_panels.jpg";
 
-
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/auth";
@@ -23,17 +22,18 @@ export const firestore = firebase.firestore();
 export const auth = firebase.auth();
 
 function App() {
-  const [user] = useAuthState(auth);
-
+  const [authUser] = useAuthState(auth);
   return (
     <div
       className="text-center"
       style={{
         backgroundImage: `url(${solarPanelBackground}) `,
-        "background-size": "cover",
+        "backgroundSize": "cover",
       }}
     >
-      <section>{user ? <MainPage /> : <SignInPage />}</section>
+      <section>
+        {authUser ? <MainPage authUser={authUser} /> : <SignInPage />}
+      </section>
     </div>
   );
 }

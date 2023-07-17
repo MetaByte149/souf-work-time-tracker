@@ -1,12 +1,24 @@
-import firebase from "firebase/compat/app";
+import React, { useRef } from "react";
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 import { auth } from "../App";
 
 export function SignInPage() {
-  const signIn = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider);
+  const usernameTextRef = useRef(null);
+  const passwordTextRef = useRef(null);
+
+  const signIn = (e) => {
+    e.preventDefault();
+
+    const usernameText = usernameTextRef.current.value;
+    const passwordText = passwordTextRef.current.value;
+    console.log(usernameText);
+    // TODO: give feedback to user if something goes wrong
+    if (usernameText.trim() === "" || passwordText.trim() === "") return;
+    const emailText = usernameText + "@soufUpcaller.com";
+
+    auth.signInWithEmailAndPassword(emailText, passwordText);
   };
+
   return (
     <div>
       <Container>
@@ -16,9 +28,11 @@ export function SignInPage() {
             <Card className="shadow">
               <Card.Body>
                 <div className="mb-3 mt-md-4">
-                  <h2 className="fw-bold mb-4 text-uppercase ">🔥☀ Upcaller ☀🔥</h2>
+                  <h2 className="fw-bold mb-4 text-uppercase ">
+                    🔥☀ Upcaller ☀🔥
+                  </h2>
                   <div className="mb-3">
-                    <Form>
+                    <Form onSubmit={signIn}>
                       <Form.Group
                         className="mb-3"
                         controlId="formBasicUsername"
@@ -28,7 +42,9 @@ export function SignInPage() {
                         </Form.Label>
                         <Form.Control
                           type="username"
-                          placeholder="Enter username" />
+                          placeholder="Enter username"
+                          ref={usernameTextRef}
+                        />
                       </Form.Group>
 
                       <Form.Group
@@ -36,20 +52,15 @@ export function SignInPage() {
                         controlId="formBasicPassword"
                       >
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" />
+                        <Form.Control
+                          type="password"
+                          placeholder="Password"
+                          ref={passwordTextRef}
+                        />
                       </Form.Group>
-                      <Form.Group
-                        className="mb-3"
-                        controlId="formBasicCheckbox"
-                      >
-                        <p className="small">
-                          <a className="text-primary" href="#!">
-                            Forgot password?
-                          </a>
-                        </p>
-                      </Form.Group>
+
                       <div className="d-grid">
-                        <Button variant="primary" onClick={signIn}>
+                        <Button type="sumbit" variant="primary">
                           Login
                         </Button>
                       </div>
