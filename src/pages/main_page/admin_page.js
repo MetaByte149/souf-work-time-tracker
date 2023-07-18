@@ -11,8 +11,14 @@ export function AdminPage(props) {
   return (
     <div>
       <Button onClick={() => auth.signOut()}>Sign out</Button>
-      <NewAccountForm />
-      <UserComponents />
+      <Row>
+        <Col>
+          <NewAccountForm />
+        </Col>
+        <Col>
+          <UserComponents />
+        </Col>
+      </Row>
     </div>
   );
 }
@@ -20,30 +26,22 @@ export function AdminPage(props) {
 export function UserComponents() {
   const [users, setUsers] = useState([]);
 
-  if (users.length < 1)
-    userRepo.getAllNonAdminUsers().then((users) => setUsers(users));
-
   if (users.length > 1) {
     return (
-      <Container fluid>
-        <Row>
-          {users.map((user) =>
-            EmployeeCard(
-              user.id,
-              user.name,
-              user.timeSpent,
-              JSON.stringify(user.admin)
-            )
-          )}
-        </Row>
-        <Row>
-          <Col>C</Col>
-          <Col>D</Col>
-          <Col>E</Col>
-        </Row>
-      </Container>
+      <Row>
+        {users.map((user) =>
+          EmployeeCard(
+            user.id,
+            user.name,
+            user.timeSpent,
+            JSON.stringify(user.admin)
+          )
+        )}
+      </Row>
     );
   }
+
+  userRepo.getAllNonAdminUsers().then((users) => setUsers(users));
   return <p>Loading...</p>;
 }
 
@@ -51,7 +49,8 @@ export function EmployeeCard(id, name, timeSpent, admin) {
   return (
     <Col
       key={id}
-      className="m-5 p-5 mb-4 bg-light rounded-3 border border-info"
+      className="m-2 mx-4 p-2 bg-light rounded-3 border border-info"
+      style={{ float: "left" }}
     >
       <p>id: {id}</p>
       <p>name: {name}</p>
