@@ -7,6 +7,7 @@ export default class UserRepo {
 
   async getUserById(id) {
     const obj = await this.provider.getUserById(id);
+    console.log(obj);
     return User.fromObject(obj);
   }
 
@@ -20,5 +21,9 @@ export default class UserRepo {
     const objs = await this.provider.getAllNonAdminUsers();
 
     return objs.map((obj) => User.fromObject(obj));
+  }
+
+  async createNewUser(id, name, password, admin) {
+    return await this.provider.createNewUser(id, name, password, admin);
   }
 }

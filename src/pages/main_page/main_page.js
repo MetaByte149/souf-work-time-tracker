@@ -2,9 +2,9 @@ import { Button } from "react-bootstrap";
 import { auth, userRepo } from "../../App";
 import { firestore } from "../../App";
 import { useDocument, useDocumentOnce } from "react-firebase-hooks/firestore";
-import User from "../../models/user";
-import { UserInfo } from "./user_info";
+import { EmployeePage } from "./employee_page";
 import { useEffect, useState } from "react";
+import { AdminPage } from "./admin_page";
 
 export function MainPage(props) {
   const { authUser } = props;
@@ -25,7 +25,6 @@ export function MainPage(props) {
     let _secondInterval;
     if (user) {
       _minuteInterval = setInterval(() => {
-        // console.log(`UPDATING USER WITH ID: ${user.id}`);
         userRepo.updateUser(user);
       }, 60000);
 
@@ -40,13 +39,7 @@ export function MainPage(props) {
       clearInterval(_secondInterval);
     };
   }, [user]);
-
-  const signOut = () => auth.signOut();
-  return (
-    <div>
-      <p>Welcome to the home page</p>
-      <Button onClick={signOut}>Sign out</Button>
-      <UserInfo authUser={authUser} user={user} liveTimeSpent={liveTimeSpent} />
-    </div>
-  );
+  if (!user) return <p> Loading... </p>;
+  if (user.admin) return <AdminPage />;
+  return <EmployeePage user={user} liveTimeSpent={liveTimeSpent} />;
 }
