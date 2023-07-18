@@ -1,41 +1,11 @@
 import { Container } from "react-bootstrap";
 import { userRepo } from "../../App";
 import { useEffect, useState } from "react";
+import User from "../../models/user";
 
 export function UserInfo(props) {
-  const { authUser } = props;
+  let { user, liveTimeSpent } = props;
 
-  const [user, setUser] = useState(null);
-  const [liveTimeSpent, setLiveTimeSpent] = useState(0);
-
-  // Only look up user if there is no user
-  if (!user) {
-    userRepo.getUserById(authUser.uid).then((user) => {
-      setUser(user);
-      setLiveTimeSpent(user.timeSpent);
-    });
-  }
-
-  useEffect(() => {
-    let _minuteInterval;
-    let _secondInterval;
-    if (user) {
-      _minuteInterval = setInterval(() => {
-        // console.log(`UPDATING USER WITH ID: ${user.id}`);
-        userRepo.updateUser(user);
-      }, 60000);
-
-      _secondInterval = setInterval(() => {
-        user.timeSpent += 1000;
-        setLiveTimeSpent(user.timeSpent);
-      }, 1000);
-    }
-
-    return () => {
-      clearInterval(_minuteInterval);
-      clearInterval(_secondInterval);
-    };
-  }, [user]);
 
   if (user)
     return (

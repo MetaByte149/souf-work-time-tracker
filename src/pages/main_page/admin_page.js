@@ -1,9 +1,7 @@
 import { Button, Container, Col, Row } from "react-bootstrap";
-import { UserInfo } from "./user_info";
 import { auth } from "../../App";
 
 export function AdminPage(props) {
-  const signOut = () => auth.signOut();
 
   return (
     <div>
