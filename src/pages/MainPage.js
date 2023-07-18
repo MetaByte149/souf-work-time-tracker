@@ -1,8 +1,9 @@
 import { Button, Container } from "react-bootstrap";
-import { auth } from "../App";
+import { auth, userRepo } from "../App";
 import { firestore } from "../App";
-import { useDocument } from "react-firebase-hooks/firestore";
-import User from "../models/User";
+import { useDocument, useDocumentOnce } from "react-firebase-hooks/firestore";
+import User from "../models/user";
+import { useEffect, useState } from "react";
 
 export function MainPage(props) {
   const { authUser } = props;
@@ -21,23 +22,15 @@ export function MainPage(props) {
 export function UserInfo(props) {
   const { authUser } = props;
 
-  const myUserRef = firestore.collection("users").doc(authUser.uid);
-  const [snapshot, isLoading] = useDocument(myUserRef);
-  //TODO: put user in state
-  if (!isLoading) {
-    const user = User.fromObject(snapshot.data());
+  const [user, setUser] = useState(null);
 
-    // TODO FIX THIS HUNGRY MESS
-    // // minute updater
-    // setInterval(async () => {
-    //   if (user) myUserRef.update(user.toObject());
-    // }, 60000);
+  // Only look up user if there is no user
+  if (!user)
+    userRepo.getUserById(authUser.uid).then((v) => {
+      setUser(v);
+    });
 
-    // // second updater
-    // setInterval(() => {
-    //   if (user) user.timeSpent += 1000;
-    // }, 1000);
-
+  if (user)
     return (
       <Container className="p-3">
         <Container className="p-5 mb-4 bg-light rounded-3">
@@ -49,12 +42,15 @@ export function UserInfo(props) {
             <p>name: {user.name}</p>
             <p>password: {user.password}</p>
             <p>timeSpent: {user.timeSpent}</p>
-            <p>admin: {user.admin.toString()}</p>
+            <p>admin: {JSON.stringify(user.admin)}</p>
           </Container>
         </Container>
       </Container>
     );
-  } else {
-    return <p>Loading...</p>;
-  }
+  else <p>Loading...</p>;
+
+  // // second updater
+  // setInterval(() => {
+  //   if (user) user.timeSpent += 1000;
+  // }, 1000);
 }

@@ -7,6 +7,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 import { SignInPage } from "./pages/SignInPage";
 import { MainPage } from "./pages/MainPage";
+import UserRepo from "./repos/user/user_repo";
+import FirebaseUserProvider from "./repos/user/firebase_user_provider";
 
 firebase.initializeApp({
   apiKey: "AIzaSyBnx-2F4AoRsDT1uAxskpY6g4RUGNa8iz0",
@@ -20,6 +22,7 @@ firebase.initializeApp({
 
 export const firestore = firebase.firestore();
 export const auth = firebase.auth();
+export const userRepo = new UserRepo(new FirebaseUserProvider());
 
 function App() {
   const [authUser] = useAuthState(auth);
@@ -28,7 +31,7 @@ function App() {
       className="text-center"
       style={{
         backgroundImage: `url(${solarPanelBackground}) `,
-        "backgroundSize": "cover",
+        backgroundSize: "cover",
       }}
     >
       <section>
