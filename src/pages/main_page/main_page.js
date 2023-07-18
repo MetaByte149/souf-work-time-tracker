@@ -1,8 +1,8 @@
 import { Button, Container } from "react-bootstrap";
-import { auth, userRepo } from "../App";
-import { firestore } from "../App";
+import { auth, userRepo } from "../../App";
+import { firestore } from "../../App";
 import { useDocument, useDocumentOnce } from "react-firebase-hooks/firestore";
-import User from "../models/user";
+import User from "../../models/user";
 import { useEffect, useState } from "react";
 
 export function MainPage(props) {

@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
-import { auth } from "../App";
+import { auth } from "../../App";
 
 export function SignInPage() {
   const usernameTextRef = useRef(null);

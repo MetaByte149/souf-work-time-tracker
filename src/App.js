@@ -5,8 +5,8 @@ import "firebase/compat/firestore";
 import "firebase/compat/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-import { SignInPage } from "./pages/SignInPage";
-import { MainPage } from "./pages/MainPage";
+import { SignInPage } from "./pages/sign_in_page/sign_in_page";
+import { MainPage } from "./pages/main_page/main_page";
 import UserRepo from "./repos/user/user_repo";
 import FirebaseUserProvider from "./repos/user/firebase_user_provider";
 
