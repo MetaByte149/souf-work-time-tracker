@@ -29,14 +29,16 @@ export function UserComponents() {
   if (users.length > 1) {
     return (
       <Row>
-        {users.map((user) =>
-          EmployeeCard(
-            user.id,
-            user.name,
-            user.timeSpent,
-            JSON.stringify(user.admin)
-          )
-        )}
+        {users
+          .sort((a, b) => b.timeSpent - a.timeSpent)
+          .map((user) =>
+            EmployeeCard(
+              user.id,
+              user.name,
+              user.timeSpent,
+              JSON.stringify(user.admin)
+            )
+          )}
       </Row>
     );
   }
@@ -52,10 +54,8 @@ export function EmployeeCard(id, name, timeSpent, admin) {
       className="m-2 mx-4 p-2 bg-light rounded-3 border border-info"
       style={{ float: "left" }}
     >
-      <p>id: {id}</p>
       <p>name: {name}</p>
       <p>timeSpent: {msToRealTime(timeSpent)}</p>
-      <p>admin: {admin}</p>
     </Col>
   );
 }
