@@ -1,6 +1,4 @@
 import { Container, Button } from "react-bootstrap";
-import { userRepo } from "../../App";
-import { useEffect, useState } from "react";
 import firebase from "firebase/compat/app";
 
 export function EmployeePage(props) {

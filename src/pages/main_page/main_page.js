@@ -1,7 +1,4 @@
-import { Button } from "react-bootstrap";
-import { auth, userRepo } from "../../App";
-import { firestore } from "../../App";
-import { useDocument, useDocumentOnce } from "react-firebase-hooks/firestore";
+import { userRepo } from "../../App";
 import { EmployeePage } from "./employee_page";
 import { useEffect, useState } from "react";
 import { AdminPage } from "./admin_page";
