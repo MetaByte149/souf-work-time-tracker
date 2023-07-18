@@ -1,9 +1,6 @@
 import { Button } from "react-bootstrap";
-import { auth } from "../../App";
-import { firestore } from "../../App";
-import { useDocument, useDocumentOnce } from "react-firebase-hooks/firestore";
-import User from "../../models/user";
 import { UserInfo } from "./user_info";
+import { auth } from "../../App";
 
 export function MainPage(props) {
   const { authUser } = props;
@@ -18,4 +15,3 @@ export function MainPage(props) {
     </div>
   );
 }
-

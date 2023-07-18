@@ -7,7 +7,6 @@ export default class UserRepo {
 
   async getUserById(id) {
     const obj = await this.provider.getUserById(id);
-    console.log(obj);
     return User.fromObject(obj);
   }
 
