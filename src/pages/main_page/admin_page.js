@@ -1,8 +1,9 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 import { userRepo } from "../../App";
 import firebase from "firebase/compat/app";
+import { msToRealTime } from "./employee_page";
 
 export function AdminPage(props) {
   const auth = firebase.auth();
@@ -17,19 +18,46 @@ export function AdminPage(props) {
 }
 
 export function UserComponents() {
+  const [users, setUsers] = useState([]);
+
+  if (users.length < 1)
+    userRepo.getAllNonAdminUsers().then((users) => setUsers(users));
+
+  if (users.length > 1) {
+    return (
+      <Container fluid>
+        <Row>
+          {users.map((user) =>
+            EmployeeCard(
+              user.id,
+              user.name,
+              user.timeSpent,
+              JSON.stringify(user.admin)
+            )
+          )}
+        </Row>
+        <Row>
+          <Col>C</Col>
+          <Col>D</Col>
+          <Col>E</Col>
+        </Row>
+      </Container>
+    );
+  }
+  return <p>Loading...</p>;
+}
+
+export function EmployeeCard(id, name, timeSpent, admin) {
   return (
-    <Container fluid>
-      <Row>
-        <Col>A</Col>
-        <Col>B</Col>
-        <Col>B</Col>
-      </Row>
-      <Row>
-        <Col>C</Col>
-        <Col>D</Col>
-        <Col>E</Col>
-      </Row>
-    </Container>
+    <Col
+      key={id}
+      className="m-5 p-5 mb-4 bg-light rounded-3 border border-info"
+    >
+      <p>id: {id}</p>
+      <p>name: {name}</p>
+      <p>timeSpent: {msToRealTime(timeSpent)}</p>
+      <p>admin: {admin}</p>
+    </Col>
   );
 }
 

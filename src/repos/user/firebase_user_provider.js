@@ -23,7 +23,8 @@ export default class firebaseUserProvider {
   async getAllNonAdminUsers() {
     const snapshot = await this.firestore
       .collection("users")
-      .where("admin", "==", "false")
+      .where("admin", "==", false)
+      .limit(25)
       .get();
 
     if (snapshot.empty) return [];
@@ -31,7 +32,7 @@ export default class firebaseUserProvider {
   }
 
   async createNewUser(id, name, password, admin) {
-    console.log(admin)
+    console.log(admin);
     const newUser = new User(id, name, password, 0, admin);
 
     this.firestore.collection("users").doc(id).set(newUser.toObject());
