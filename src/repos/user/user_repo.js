@@ -15,4 +15,10 @@ export default class UserRepo {
 
     return this.provider.updateUser(obj);
   }
+
+  async getAllNonAdminUsers() {
+    const objs = await this.provider.getAllNonAdminUsers();
+
+    return objs.map((obj) => User.fromObject(obj));
+  }
 }

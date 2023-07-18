@@ -1,17 +1,29 @@
-import { Button } from "react-bootstrap";
+import { Button, Container, Col, Row } from "react-bootstrap";
 import { UserInfo } from "./user_info";
 import { auth } from "../../App";
 
-export function MainPage(props) {
-  const { authUser } = props;
-
+export function AdminPage(props) {
   const signOut = () => auth.signOut();
 
   return (
     <div>
-      <p>Welcome to the home page</p>
-      <Button onClick={signOut}>Sign out</Button>
-      <UserInfo authUser={authUser} />
+      <UserComponents />
     </div>
+  );
+}
+
+export function UserComponents() {
+  return (
+    <Container>
+      <Row>
+        <Col >A</Col>
+        <Col >B</Col>
+      </Row>
+      <Row>
+        <Col >C</Col>
+        <Col >D</Col>
+        <Col >E</Col>
+      </Row>
+    </Container>
   );
 }

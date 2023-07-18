@@ -9,7 +9,6 @@ export function MainPage(props) {
   const { authUser } = props;
 
   const signOut = () => auth.signOut();
-
   return (
     <div>
       <p>Welcome to the home page</p>
@@ -18,4 +17,3 @@ export function MainPage(props) {
     </div>
   );
 }
-

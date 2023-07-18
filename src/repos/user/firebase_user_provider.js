@@ -18,4 +18,14 @@ export default class firebaseUserProvider {
 
     await this.db.collection("users").doc(user.id).update(user);
   }
+
+  async getAllNonAdminUsers() {
+    const snapshot = await this.db
+      .collection("users")
+      .where("admin", "==", "false")
+      .get();
+
+    if (snapshot.empty) return [];
+    return snapshot.docs.map((snapshot) => snapshot.data());
+  }
 }
