@@ -31,14 +31,7 @@ export function UserComponents() {
       <Row>
         {users
           .sort((a, b) => b.timeSpent - a.timeSpent)
-          .map((user) =>
-            EmployeeCard(
-              user.id,
-              user.name,
-              user.timeSpent,
-              JSON.stringify(user.admin)
-            )
-          )}
+          .map((user) => EmployeeCard(user.id, user.name, user.timeSpent))}
       </Row>
     );
   }
@@ -47,7 +40,7 @@ export function UserComponents() {
   return <p>Loading...</p>;
 }
 
-export function EmployeeCard(id, name, timeSpent, admin) {
+export function EmployeeCard(id, name, timeSpent) {
   return (
     <Col
       key={id}
@@ -71,7 +64,6 @@ export function NewAccountForm() {
     const usernameText = usernameTextRef.current.value;
     const passwordText = passwordTextRef.current.value;
     const adminCheckBox = adminCheckboxRef.current;
-    console.log(adminCheckBox.checked);
     // TODO: give feedback to user if something goes wrong
     if (
       usernameText.trim() === "" ||
@@ -135,7 +127,7 @@ export function NewAccountForm() {
 
                     <div className="d-grid">
                       <Button type="sumbit" variant="info">
-                        Login
+                        Add user
                       </Button>
                     </div>
                   </Form>
