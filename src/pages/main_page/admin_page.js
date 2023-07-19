@@ -18,7 +18,7 @@ export function AdminPage(props) {
 
   return (
     <div>
-      <Button onClick={() => auth.signOut()}>Sign out</Button>
+      <Button className="m-3" onClick={() => auth.signOut()}>Sign out</Button>
       <Row>
         <Col>
           <NewAccountForm />

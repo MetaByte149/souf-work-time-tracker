@@ -49,8 +49,9 @@ export function EmployeePage(props) {
   if (user)
     return (
       <Container>
-        <p>Welcome to the home page</p>
-        <Button onClick={() => auth.signOut()}>Sign out</Button>
+        <Button className="m-3" onClick={() => auth.signOut()}>
+          Sign out
+        </Button>
 
         <Container className=" py-4 mb-4 bg-light rounded-3">
           <h1 className="header">
