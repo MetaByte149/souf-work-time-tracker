@@ -2,7 +2,7 @@ import { Container, Button } from "react-bootstrap";
 import firebase from "firebase/compat/app";
 
 export function EmployeePage(props) {
-  let { user, liveTimeSpent } = props;
+  let { user } = props;
 
   const auth = firebase.auth();
 
@@ -21,7 +21,15 @@ export function EmployeePage(props) {
               <p>id: {user.id}</p>
               <p>name: {user.name}</p>
               <p>password: {user.password}</p>
-              <p>timeSpent: {msToRealTime(liveTimeSpent)}</p>
+              <p>
+                <b>time worked:</b> {msToRealTime(user.timeSpent)}
+              </p>
+              <p>
+                <b>time relaxed:</b> {msToRealTime(user.relaxTimeSpent)}
+              </p>
+              <p>
+                <b>time trained:</b> {msToRealTime(user.trainingTimeSpent)}
+              </p>
               <p>admin: {JSON.stringify(user.admin)}</p>
             </Container>
           </Container>

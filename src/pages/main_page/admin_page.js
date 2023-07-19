@@ -31,7 +31,15 @@ export function UserComponents() {
       <Row>
         {users
           .sort((a, b) => b.timeSpent - a.timeSpent)
-          .map((user) => EmployeeCard(user.id, user.name, user.timeSpent))}
+          .map((user) =>
+            EmployeeCard(
+              user.id,
+              user.name,
+              user.timeSpent,
+              user.relaxTimeSpent,
+              user.trainingTimeSpent
+            )
+          )}
       </Row>
     );
   }
@@ -40,7 +48,13 @@ export function UserComponents() {
   return <p>Loading...</p>;
 }
 
-export function EmployeeCard(id, name, timeSpent) {
+export function EmployeeCard(
+  id,
+  name,
+  timeSpent,
+  relaxTimeSpent,
+  trainingTimeSpent
+) {
   return (
     <Col
       key={id}
@@ -48,7 +62,15 @@ export function EmployeeCard(id, name, timeSpent) {
       style={{ float: "left" }}
     >
       <p>name: {name}</p>
-      <p>timeSpent: {msToRealTime(timeSpent)}</p>
+      <p>
+        <b>time worked:</b> {msToRealTime(timeSpent)}
+      </p>
+      <p>
+        <b>time relaxed:</b> {msToRealTime(relaxTimeSpent)}
+      </p>
+      <p>
+        <b>time trained:</b> {msToRealTime(trainingTimeSpent)}
+      </p>
     </Col>
   );
 }

@@ -32,7 +32,7 @@ export default class firebaseUserProvider {
   }
 
   async createNewUser(id, name, password, admin) {
-    const newUser = new User(id, name, password, 0, admin);
+    const newUser = new User(id, name, password, 0, 0, 0, admin);
 
     this.firestore.collection("users").doc(id).set(newUser.toObject());
   }
