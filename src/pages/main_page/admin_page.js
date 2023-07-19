@@ -88,19 +88,22 @@ export function NewAccountForm() {
   const passwordTextRef = useRef(null);
   const adminCheckboxRef = useRef(null);
 
+  const [infoForUser, setInfoForUser] = useState("");
+
   const submitForm = (e) => {
     e.preventDefault();
 
     const usernameText = usernameTextRef.current.value;
     const passwordText = passwordTextRef.current.value;
     const adminCheckBox = adminCheckboxRef.current;
-    // TODO: give feedback to user if something goes wrong
     if (
       usernameText.trim() === "" ||
       passwordText.trim() === "" ||
       passwordText.length < 6
     )
-      return;
+      return setInfoForUser(
+        "Make sure all fields are filled in and password has to be larger than 6 characters"
+      );
     const emailText = usernameText + "@soufUpcaller.com";
     const auth = firebase.auth();
 
@@ -114,7 +117,13 @@ export function NewAccountForm() {
           passwordText,
           adminCheckBox.checked
         )
-      );
+      )
+      .catch((err) => {
+        setInfoForUser(
+          "Something went wrong with the database, ask dev for help"
+        );
+        console.error(err);
+      });
   };
 
   return (
@@ -153,6 +162,12 @@ export function NewAccountForm() {
                         type="checkbox"
                         ref={adminCheckboxRef}
                       />
+                    </Form.Group>
+
+                    <Form.Group>
+                      <Form.Label className="text-danger">
+                        {infoForUser}
+                      </Form.Label>
                     </Form.Group>
 
                     <div className="d-grid">

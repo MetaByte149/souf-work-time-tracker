@@ -2,15 +2,7 @@ import { userRepo } from "../../App";
 import { EmployeePage } from "./employee_page";
 import { useState } from "react";
 import { AdminPage } from "./admin_page";
-import {
-  Col,
-  Button,
-  Spinner,
-  Row,
-  Container,
-  Card,
-  Form,
-} from "react-bootstrap";
+import { Spinner } from "react-bootstrap";
 
 export function MainPage(props) {
   const { authUser } = props;
