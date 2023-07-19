@@ -1,23 +1,55 @@
-import React, { useRef } from "react";
-import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
+import React, { useRef, useState } from "react";
+import {
+  Col,
+  Button,
+  Row,
+  Container,
+  Card,
+  Form,
+  Spinner,
+} from "react-bootstrap";
 import { auth } from "../../App";
 
 export function SignInPage() {
   const usernameTextRef = useRef(null);
   const passwordTextRef = useRef(null);
 
+  const [infoForUser, setInfoForUser] = useState("");
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+
   const signIn = (e) => {
     e.preventDefault();
 
     const usernameText = usernameTextRef.current.value;
     const passwordText = passwordTextRef.current.value;
-    console.log(usernameText);
-    // TODO: give feedback to user if something goes wrong
-    if (usernameText.trim() === "" || passwordText.trim() === "") return;
+
+    if (usernameText.trim() === "" || passwordText.trim() === "")
+      return setInfoForUser("Make sure to fill in both fields!");
+
     const emailText = usernameText + "@soufUpcaller.com";
 
-    auth.signInWithEmailAndPassword(emailText, passwordText);
+    setIsLoggingIn(true);
+    auth.signInWithEmailAndPassword(emailText, passwordText).catch((_) => {
+      setIsLoggingIn(false);
+      setInfoForUser("Incorrect login information");
+    });
   };
+
+  let loginButton = isLoggingIn ? (
+    <Button variant="primary" disabled>
+      <Spinner
+        as="span"
+        animation="border"
+        size="sm"
+        role="status"
+        aria-hidden="true"
+      />{" "}
+    </Button>
+  ) : (
+    <Button type="sumbit" variant="primary">
+      Login
+    </Button>
+  );
 
   return (
     <div>
@@ -59,11 +91,13 @@ export function SignInPage() {
                         />
                       </Form.Group>
 
-                      <div className="d-grid">
-                        <Button type="sumbit" variant="primary">
-                          Login
-                        </Button>
-                      </div>
+                      <Form.Group>
+                        <Form.Label className="text-danger">
+                          {infoForUser}
+                        </Form.Label>
+                      </Form.Group>
+
+                      <div className="d-grid">{loginButton}</div>
                     </Form>
                   </div>
                 </div>

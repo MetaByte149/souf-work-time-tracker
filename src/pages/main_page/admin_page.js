@@ -1,6 +1,14 @@
 import React, { useRef, useState } from "react";
 
-import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
+import {
+  Col,
+  Button,
+  Row,
+  Container,
+  Card,
+  Form,
+  Spinner,
+} from "react-bootstrap";
 import { userRepo } from "../../App";
 import firebase from "firebase/compat/app";
 import { msToRealTime } from "./employee_page";
@@ -45,7 +53,7 @@ export function UserComponents() {
   }
 
   userRepo.getAllNonAdminUsers().then((users) => setUsers(users));
-  return <p>Loading...</p>;
+  return <Spinner animation="border" role="status" />;
 }
 
 export function EmployeeCard(
@@ -111,7 +119,7 @@ export function NewAccountForm() {
 
   return (
     <Container>
-      <Row className="vh-100 d-flex justify-content-center align-items-center">
+      <Row className="d-flex justify-content-center align-items-center">
         <Col md={8} lg={6} xs={12}>
           <div className="border border-3 border-info"></div>
           <Card className="shadow">

@@ -24,7 +24,6 @@ export const firestore = firebase.firestore();
 export const auth = firebase.auth();
 export const userRepo = new UserRepo(new FirebaseUserProvider());
 
-
 function App() {
   const [authUser] = useAuthState(auth);
   return (
@@ -33,6 +32,9 @@ function App() {
       style={{
         backgroundImage: `url(${solarPanelBackground}) `,
         backgroundSize: "cover",
+        "background-position": "center",
+        "background-repeat": "no-repeat",
+        "background-attachment": "fixed",
       }}
     >
       <section>

@@ -1,4 +1,4 @@
-import { Container, Button, Modal } from "react-bootstrap";
+import { Container, Button, Modal, Spinner } from "react-bootstrap";
 import firebase from "firebase/compat/app";
 import { useEffect, useState } from "react";
 import { userRepo } from "../../App";
@@ -21,7 +21,6 @@ export function EmployeePage(props) {
 
       _secondInterval = setInterval(() => {
         setTimeSpentCurrentSession((t) => t + 1000);
-        console.log(currentTimeSpending);
         switch (currentTimeSpending) {
           case TIME_SPENT_ON.WORK:
             user.timeSpent += 1000;
@@ -100,7 +99,7 @@ export function EmployeePage(props) {
         />
       </Container>
     );
-  else <p>Loading...</p>;
+  else return <Spinner animation="border" role="status" />;
 }
 
 export function Popup(props) {

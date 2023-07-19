@@ -19,7 +19,6 @@ export default class UserRepo {
 
   async getAllNonAdminUsers() {
     const objs = await this.provider.getAllNonAdminUsers();
-    console.log(objs);
     return objs.map((obj) => User.fromObject(obj));
   }
 
