@@ -10,6 +10,7 @@ export function EmployeePage(props) {
   const [currentTimeSpending, setCurrentTimeSpending] = useState(
     TIME_SPENT_ON.WORK
   );
+  const [lastSecondUpdate, setLastSecondUpdate] = useState(Date.now());
 
   useEffect(() => {
     let _minuteInterval;
@@ -20,21 +21,24 @@ export function EmployeePage(props) {
       }, 60000);
 
       _secondInterval = setInterval(() => {
-        setTimeSpentCurrentSession((t) => t + 1000);
+        const timeSinceLastUpdate = Date.now() - lastSecondUpdate;
+        setTimeSpentCurrentSession((t) => t + timeSinceLastUpdate);
         switch (currentTimeSpending) {
           case TIME_SPENT_ON.WORK:
-            user.timeSpent += 1000;
+            user.timeSpent += timeSinceLastUpdate;
             break;
           case TIME_SPENT_ON.BREAK:
-            user.relaxTimeSpent += 1000;
+            user.relaxTimeSpent += timeSinceLastUpdate;
             break;
           case TIME_SPENT_ON.TRAINING:
-            user.trainingTimeSpent += 1000;
+            user.trainingTimeSpent += timeSinceLastUpdate;
             break;
           default:
             console.error("You should never see this. ");
             break;
         }
+
+        setLastSecondUpdate((t) => Date.now());
       }, 1000);
     }
 
@@ -42,7 +46,7 @@ export function EmployeePage(props) {
       clearInterval(_minuteInterval);
       clearInterval(_secondInterval);
     };
-  }, [user, currentTimeSpending]);
+  }, [user, currentTimeSpending, lastSecondUpdate]);
 
   const auth = firebase.auth();
 
@@ -54,22 +58,10 @@ export function EmployeePage(props) {
         </Button>
 
         <Container className=" py-4 mb-4 bg-light rounded-3">
-          <h1 className="header">
-            Welcome <i>{user.name}</i> Good luck! 🥰
+          <h1 className="header mb-4">
+            🥰 Welcome <i>{user.name}</i> Good luck! 🥰
           </h1>
-          <b>
-            <p>id:</p>
-          </b>
-          {user.id}
 
-          <b>
-            <p>name:</p>{" "}
-          </b>
-          {user.name}
-          <b>
-            <p>password:</p>{" "}
-          </b>
-          {user.password}
           <p>
             <b>time worked:</b> {msToRealTime(user.timeSpent)}
           </p>
@@ -79,9 +71,6 @@ export function EmployeePage(props) {
           <p>
             <b>time trained:</b> {msToRealTime(user.trainingTimeSpent)}
           </p>
-          <b>
-            <p>admin: {JSON.stringify(user.admin)}</p>
-          </b>
           <p>
             <b>Time spent current session:</b>{" "}
             {msToRealTime(timeSpentCurrentSession)}
